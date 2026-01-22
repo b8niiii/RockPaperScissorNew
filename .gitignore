@@ -205,3 +205,13 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+
+# ignore dataset zip
+archive.zip
+
+# ignore raw dataset folder
+rps-cv-images/
+
+# ignore split dataset folder
+rps-split/
