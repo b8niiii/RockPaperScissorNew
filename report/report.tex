@@ -1,0 +1,68 @@
+% !TEX root = report.tex
+
+
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}   % per scrivere in UTF-8 (accenti)
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}   % o [italian] se scrivi in italiano
+\usepackage{graphicx}         % per inserire immagini
+\usepackage{amsmath, amssymb} % per formule matematiche
+\usepackage{hyperref}         % per link cliccabili
+\usepackage{caption}
+
+\title{Rock, Paper and Scissors Image Classification}
+\author{Alessandro Bottoni}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+The following project aims at developing a Convolutional Neural Network capable of recognizing rock, paper and scissors hand gestures.
+
+
+\section{Dataset}
+The dataset is composed of 2189 pictures in a .png format and divided in three classes: 
+1. Rock, with 726 pictures.
+2. Paper, with 712 pictures.
+3. Scissors, with 750 pictures.
+
+\section{Preprocessing and Data Augmentation}
+% Spiega resize a 128x128, normalizzazione, e le augmentations (flip, rotation, jitter).
+
+\section{Train/Validation/Test Split}
+% Spiega lo script che divide per classe in 70/15/15 (o 80/10/10) e la struttura delle cartelle.
+
+\section{Model and Training}
+% Descrivi il modello (CNN), gli hyperparameters e come usi i DataLoader.
+
+\section{Results}
+% Quando li hai: accuracy, qualche grafico, una confusion matrix, breve commento.
+
+\section{Discussion and Conclusion}
+% Cosa hai imparato, limiti del lavoro, possibili miglioramenti.
+
+\section{Bibliography}
+
+1. Understand "stride": \url{https://medium.com/@bragadeeshs/stride-in-cnns-stepping-towards-efficient-image-processing-e58a34b02ff0}
+2. Basic tutorials for inspiration: what is torch.nn?: \url{https://docs.pytorch.org/tutorials/}
+3. Basic tutorials for inspiration: training a Neural Network: \url{https://docs.pytorch.org/tutorials/beginner/basics/buildmodel_tutorial.html}
+4. Basic tutorials for inspiration: training an image classifier: \url{https://docs.pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html}
+5. Understand conv2d parameters: \url{https://www.codegenes.net/blog/conv2d-parameter-object-input-pytorch/} 
+6. hyperparameter fine-tuning with Ray: \url{https://docs.pytorch.org/tutorials/beginner/hyperparameter_tuning_tutorial.html}
+7. Stochastic Gradient Descent and Momentum: \url{https://www.lunartech.ai/blog/mastering-stochastic-gradient-descent-the-backbone-of-deep-learning-optimization}
+
+
+
+\begingroup
+\footnotesize
+\textit{I declare that this material, which I now submit for assessment, is entirely my own work and has not been taken from the work of others, save and to the extent that such work has been cited and acknowledged within the text of my work. I understand that plagiarism, collusion, and copying are grave and serious offences in the university and accept the penalties that would be imposed should I engage in plagiarism, collusion or copying. This assignment, or any part of it, has not been previously submitted by me or any other person for assessment on this or any other course of study.}
+\endgroup
+
+\end{document}
+
+
+
+\end{document}
