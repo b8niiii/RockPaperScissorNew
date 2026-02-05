@@ -215,3 +215,6 @@ rps-cv-images/
 
 # ignore split dataset folder
 rps-split/
+
+
+CNNs/trained_cnn.pth
