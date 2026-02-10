@@ -10,10 +10,11 @@
 \usepackage{amsmath, amssymb} % per formule matematiche
 \usepackage{hyperref}         % per link cliccabili
 \usepackage{caption}
+\usepackage{listings}
 
 \title{Rock, Paper and Scissors Image Classification}
 \author{Alessandro Bottoni}
-\date{\today}
+\date{\today} 
 
 \begin{document}
 
@@ -30,39 +31,145 @@ The dataset is composed of 2189 pictures in a .png format and divided in three c
 3. Scissors, with 750 pictures.
 
 \section{Preprocessing and Data Augmentation}
-% Spiega resize a 128x128, normalizzazione, e le augmentations (flip, rotation, jitter).
-
+% Spiega resize a 256x256, normalizzazione, e le augmentations (flip, rotation, jitter).
+To prepare the dataset for training, a series of preprocessing steps and data augmentation techniques were applied. First, all images were resized to a uniform size of 256×256 pixels to ensure consistent input dimensions for the CNN. Next, pixel values were normalized to the range by dividing by 255, which supports faster convergence during training.
+To increase training-data diversity and improve model generalization, several augmentation techniques were used. These included random horizontal flips to reflect natural variability in hand gestures and random rotations within ±15° to account for different hand orientations. In addition, random color jittering was applied to vary brightness, contrast, and saturation, improving robustness to changing lighting conditions.
 \section{Train/Validation/Test Split}
-% Spiega lo script che divide per classe in 70/15/15 (o 80/10/10) e la struttura delle cartelle.
 
-\section{Model and Training}
+% Spiega lo script che divide per classe in 70/15/15 (o 80/10/10) e la struttura delle cartelle.
+Altough it is a best practice to use cross validation to validate models, in order to avoid overfitting on the validation set, for the first model a simple train/validation/test split was used. 
+This choice was made to speed up the training process, which is already quite long with the current hardware. The dataset was split into 70% for training, 15% for validation and 15% for testing. 
+The split was performed separately for each class to ensure that the distribution of classes is consistent across all sets. 
+As for the other two models a cross validation approach has been used, to better evaluate the performance of the models and avoid overfitting on the validation set.
+
+\section{Simple CNN Model and Training}
+% Descrivi il modello (CNN), gli hyperparameters e come usi i DataLoader.
+Model Architecture: Simple CNN:
+The first model designed is a very simple Convolutional Neural Network (CNN) architecture. 
+It consists of a single convolutional layer followed by a ReLU activation function, a pooling layer, a flatten layer and a fully connected one.
+The convolutional layer takes as input 3 channels (RGB color images), the only fixed parameter, while the number of output channels and the kernel size are hyperparameters that can be tuned in the following way:
+- Number of output channels: 16, 32, 64 
+- Kernel size: 3, 4, 7
+The padding is automatically calculated as the kernel size divided by 2, to preserve the spatial dimensions of the input. The purpose of this layer is to extract spatial features from the input images, such as edges and textures. 
+The ReLU activation function introduces non-linearity to the model, allowing it to learn more complex patterns, while the pooling layer reduces the spatial dimensions of the feature maps, which helps to reduce the number of parameters and computational cost.
+The kernel size of the pooling layer is tunable as well as we will see further ahead, and can be set to either 2 or 4, where 2 preserves more details, and 4 is faster but loses information
+Finally, the flatten layer converts the 2D feature maps into a 1D vector, which is then passed to the fully connected layer for classification.
+
+Hyperparameter Tuning:
+The project uses Ray Tune for hyperparameter tuning, which is a powerful library for distributed hyperparameter optimization; this allows us to efficiently search through the hyperparameter space and find the best combination of parameters for our model, splitting the workload across multiple compute resources if available. 
+The hyperparameters that are being tuned include the number of output channels in the convolutional layer, the kernel size of the convolutional layer and the kernel size of the pooling layer for the architectur of the model, as well as the learning rate and the batch size for the training process.
+The parameters are sampled in the following way:
+- Number of output channels and kernel size of the convolutional layer are being sample through a grid search, respectively from the sets {16, 32, 64} and {3, 4, 7}. This means that all possible combinations of these parameters will be evaluated, hence a total of 9 combinations (computationally expensive but exhaustive).
+- Kernal size of the pooling layer and batch size are being sampled through a random search, respectively from the sets {2, 4} and {16, 32, 64}. This means that a random combination of these parameters will be evaluated at each trial (less computationally expensive altough not exhaustive, to save computing power and time).
+- Learning rate is being sampled through a log-uniform distribution between 1e-4 and 1e-2, which allows us to explore a wide range of learning rates on a logarithmic scale, which is often more effective for finding good learning rates in deep learning models.
+
+\subsection{Model Training Methodology}
+
+\subsubsection{Hyperparameter Search Space and Strategy}
+
+The project employs Ray Tune, a distributed hyperparameter optimization framework, to systematically explore the hyperparameter space. Ray Tune provides efficient resource management, parallel trial execution, and sophisticated scheduling algorithms for early stopping.
+
+\subsubsection{Architecture Hyperparameters (Grid Search)}
+
+Architecture-related hyperparameters are explored using exhaustive grid search to ensure comprehensive evaluation of model capacity:
+
+\begin{itemize}
+    \item \textbf{Output Channels} $\in \{8, 16, 32\}$: Controls the number of filters in the convolutional layer, directly affecting model capacity. Lower values reduce parameters and computational cost, while higher values increase representational power.
+    
+    \item \textbf{Convolutional Kernel Size} $\in \{3, 4, 7\}$: Determines the receptive field of each filter. Smaller kernels capture fine-grained local features, while larger kernels capture broader spatial context. The sizes were chosen to represent small ($3 \times 3$), medium ($4 \times 4$), and large ($7 \times 7$) receptive fields.
+\end{itemize}
+
+Grid search generates $3 \times 3 = 9$ unique architecture combinations.
+
+\subsubsection{Training Hyperparameters (Random Search)}
+
+Training-related hyperparameters are sampled randomly to balance exploration efficiency with computational cost:
+
+\begin{itemize}
+    \item \textbf{Pooling Kernel Size} $\in \{2, 4\}$: Sampled using \texttt{tune.choice}. Controls the downsampling factor. A kernel size of 2 is standard practice, preserving more spatial detail, while a kernel size of 4 performs aggressive downsampling, trading spatial resolution for faster computation.
+    
+    \item \textbf{Batch Size} $\in \{16, 32, 64\}$: Sampled uniformly with equal probability. Smaller batch sizes provide noisier gradient estimates but often generalize better, while larger batch sizes offer more stable training and faster computation per epoch.
+\end{itemize}
+\subsubsection{Training Hyperparameters (Log-Uniform)}
+\begin{itemize}
+    \item \textbf{Learning Rate}: Sampled from a log-uniform distribution. Log-uniform sampling ensures equal representation across orders of magnitude, as learning rates often require logarithmic exploration. Mathematically:
+\end{itemize}
+
+With \texttt{num\_samples=10}, each of the 9 architecture combinations is evaluated with 10 different random samples of training hyperparameters, yielding a maximum of $9 \times 10 = 90$ potential trials.
+\subsubsection{Ray Tune Configuration and Training Loop}
+
+Before describing the tuning workflow, it is useful to summarize the training setup at a high level. The model is trained using stochastic gradient descent with momentum, optimized against a cross-entropy loss for a three-class classification task. Each trial runs for a limited number of epochs (up to 10), and the batch size is treated as a tunable parameter, so the amount of data processed per update can change across trials. Data are fed through separate training and validation loaders: the training loader shuffles samples to improve generalization, while the validation loader keeps a fixed order to make evaluation stable; a small number of worker processes is used to overlap data loading with computation.
+
+In this project, hyperparameter tuning is organized as a collection of independent \emph{trials}. Each trial corresponds to one concrete set of hyperparameters and runs a short training job, producing comparable validation metrics that Ray Tune can track across experiments. The overall goal is to explore many configurations efficiently while keeping the execution stable and reproducible.
+
+To keep the machine responsive, the tuning process is run under a controlled resource budget. Instead of letting every trial consume as many resources as it wants, each trial is assigned a fixed amount of compute (a certain number of CPU cores). This explicit resource assignment determines how many trials can run at the same time: if each trial needs more CPU, fewer trials can run in parallel; if each trial needs less, more trials can run concurrently. Ray Tune supports this kind of per-trial resource allocation so that parallelism is predictable and does not overwhelm the system. \cite{ray_tuning}
+
+To avoid wasting time on bad configurations, the search uses the ASHA scheduler (Asynchronous Successive Halving). ASHA implements an early-stopping policy that continuously compares trials as they progress: at predefined milestones in training, a trial's performance is evaluated against other trials that have reached the same point. Trials that are clearly underperforming are stopped early, and the freed resources are immediately reused to start new trials or continue more promising ones. Because decisions are made asynchronously, trials do not need to wait for each other, which improves resource utilization and speeds up the overall search. \cite{ray_tuning}
+
+Checkpointing is used to preserve useful model states during tuning. Rather than saving many snapshots, the configuration can be set up to retain only the most relevant checkpoint per trial (typically the best one according to the chosen validation metric). This makes it easier to recover the best-performing model after tuning and reduces disk usage, which is important when running many trials. \cite{ray_tuning}
+
+Inside each trial, the training loop follows a standard pattern. Each epoch is split into a training phase (where model parameters are updated) and a validation phase (where performance is measured without updating the model). After each epoch, the trial reports key metrics (such as validation loss, validation accuracy, and training loss) back to Ray Tune so that the scheduler can make early-stopping decisions and so that results are logged in a consistent format. \cite{ray_tuning}
+
+Finally, the entire experiment is orchestrated by the Tune \emph{Tuner}. The Tuner combines the search space definition with the optimization objective (which metric to minimize or maximize) and the scheduler policy. It generates trial configurations, queues them, runs them when resources are available, and collects the results into a single structured output that you can inspect to select the best configuration and its corresponding checkpoint. \cite{ray_tuning}
+
+
+
+\subsection{Results}
+% Quando li hai: accuracy, qualche grafico, una confusion matrix, breve commento: metti accuracy, precision, recall, f1 score e grafico che mostra andamento accuracy e andamento loss.
+
+\section{Medium CNN Model and Training}
 % Descrivi il modello (CNN), gli hyperparameters e come usi i DataLoader.
 
-\section{Results}
-% Quando li hai: accuracy, qualche grafico, una confusion matrix, breve commento.
+\subsection{Results}
+% Quando li hai: accuracy, qualche grafico, una confusion matrix, breve commento: metti accuracy, precision, recall, f1 score e grafico che mostra andamento accuracy e andamento loss.
+
+\section{Residual CNN Model and Training}
+% Descrivi il modello (CNN), gli hyperparameters e come usi i DataLoader.
+
+\subsection{Results}
+% Quando li hai: accuracy, qualche grafico, una confusion matrix, breve commento: metti accuracy, precision, recall, f1 score e grafico che mostra andamento accuracy e andamento loss.
 
 \section{Discussion and Conclusion}
 % Cosa hai imparato, limiti del lavoro, possibili miglioramenti.
 
 \section{Bibliography}
 
-1. Understand "stride": \url{https://medium.com/@bragadeeshs/stride-in-cnns-stepping-towards-efficient-image-processing-e58a34b02ff0}
-2. Basic tutorials for inspiration: what is torch.nn?: \url{https://docs.pytorch.org/tutorials/}
-3. Basic tutorials for inspiration: training a Neural Network: \url{https://docs.pytorch.org/tutorials/beginner/basics/buildmodel_tutorial.html}
-4. Basic tutorials for inspiration: training an image classifier: \url{https://docs.pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html}
-5. Understand conv2d parameters: \url{https://www.codegenes.net/blog/conv2d-parameter-object-input-pytorch/} 
-6. hyperparameter fine-tuning with Ray: \url{https://docs.pytorch.org/tutorials/beginner/hyperparameter_tuning_tutorial.html}
-7. Stochastic Gradient Descent and Momentum: \url{https://www.lunartech.ai/blog/mastering-stochastic-gradient-descent-the-backbone-of-deep-learning-optimization}
+\begin{thebibliography}{9}
+
+\bibitem{stride} 
+Understand "stride". 
+\url{https://medium.com/@bragadeeshs/stride-in-cnns-stepping-towards-efficient-image-processing-e58a34b02ff0}
+
+\bibitem{torch.nn}
+Basic tutorials for inspiration: what is torch.nn?.
+\url{https://docs.pytorch.org/tutorials/}
+
+\bibitem{buildmodel_tutorial}
+Basic tutorials for inspiration: training a Neural Network.
+\url{https://docs.pytorch.org/tutorials/beginner/basics/buildmodel_tutorial.html}
+
+\bibitem{cifar10_tutorial}
+Basic tutorials for inspiration: training an image classifier.
+\url{https://docs.pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html}
+
+\bibitem{conv2d_parameters}
+Understand conv2d parameters.
+\url{https://www.codegenes.net/blog/conv2d-parameter-object-input-pytorch/}
+
+\bibitem{ray_tuning}
+Hyperparameter fine-tuning with Ray.
+\url{https://docs.pytorch.org/tutorials/beginner/hyperparameter_tuning_tutorial.html}
+
+\bibitem{sgd_momentum}
+Stochastic Gradient Descent and Momentum.
+\url{https://www.lunartech.ai/blog/mastering-stochastic-gradient-descent-the-backbone-of-deep-learning-optimization}
+
+\end{thebibliography}
 
 
-
-\begingroup
+\par
+\vspace{1cm}
 \footnotesize
 \textit{I declare that this material, which I now submit for assessment, is entirely my own work and has not been taken from the work of others, save and to the extent that such work has been cited and acknowledged within the text of my work. I understand that plagiarism, collusion, and copying are grave and serious offences in the university and accept the penalties that would be imposed should I engage in plagiarism, collusion or copying. This assignment, or any part of it, has not been previously submitted by me or any other person for assessment on this or any other course of study.}
-\endgroup
-
-\end{document}
-
-
 
 \end{document}
