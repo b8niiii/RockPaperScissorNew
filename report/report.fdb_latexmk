@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1770734504.63432 "/Users/alessandro/Progetti/RockPaperScissorNew/report/report.tex" "report.pdf" "report" 1770734504.86927 0
+["pdflatex"] 1770806985.62921 "/Users/alessandro/Progetti/RockPaperScissorNew/report/report.tex" "report.pdf" "report" 1770806985.97437 0
   "/Users/alessandro/Library/texlive/2025basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1095.600pk" 1770719385.35473 28952 52fe7faed1780930c3a5b8854529b58f ""
   "/Users/alessandro/Library/texlive/2025basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk" 1770719385.96251 31928 4b8e29ab166d7ed8f09f8caa6ff09c81 ""
   "/Users/alessandro/Library/texlive/2025basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk" 1769080662.82357 40112 098937aaf2ee51316d361ea96c15e0b8 ""
@@ -10,7 +10,7 @@
   "/Users/alessandro/Library/texlive/2025basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1095.600pk" 1770719383.53254 35180 c91a457f25ff195d93754aa0adcd1388 ""
   "/Users/alessandro/Library/texlive/2025basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1095.600pk" 1769676870.22221 21952 ad14626f2126ecc501049756e912cc45 ""
   "/Users/alessandro/Library/texlive/2025basic/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk" 1770713794.21063 12644 aede08f34e09da552e349acb965c280f ""
-  "/Users/alessandro/Progetti/RockPaperScissorNew/report/report.tex" 1770734504.11901 15007 9518333742be7f2c21136738760a7d17 ""
+  "/Users/alessandro/Progetti/RockPaperScissorNew/report/report.tex" 1770806985.20033 23961 2983ef454f17d133274076c2175dfd49 ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/tfm/jknappen/ec/ecbx1095.tfm" 1136768653 3584 21b378cca2e40816b0e6d74a4dc98f04 ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm" 1136768653 3584 402da0b29eafbad07963b1224b222f18 ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/tfm/jknappen/ec/ecbx1440.tfm" 1136768653 3584 13049b61b922a28b158a38aeff75ee9b ""
@@ -43,7 +43,9 @@
   "/usr/local/texlive/2025basic/texmf-dist/fonts/tfm/public/cm/cmsy8.tfm" 1136768653 1120 8b7d695260f3cff42e636090a8002094 ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1248133631 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1248133631 35752 024fb6c41858982481f6968b5fc26508 ""
+  "/usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1248133631 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
+  "/usr/local/texlive/2025basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1248133631 32626 4f5c1b83753b1dd3a97d1b399a005b4b ""
   "/usr/local/texlive/2025basic/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1461363279 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/local/texlive/2025basic/texmf-dist/tex/generic/atbegshi/atbegshi.sty" 1575674566 24708 5584a51a7101caf7e6bbf1fc27d8f7b1 ""
   "/usr/local/texlive/2025basic/texmf-dist/tex/generic/babel-english/english.ldf" 1496785618 7008 9ff5fdcc865b01beca2b0fe4a46231d4 ""
@@ -110,9 +112,9 @@
   "/usr/local/texlive/2025basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1769080242 79187 04b17f8738f833a5a5f7867124477b59 ""
   "/usr/local/texlive/2025basic/texmf-var/web2c/pdftex/pdflatex.fmt" 1769080226 2663826 587f5e3010f904a94922df97ed3ec94c ""
   "/usr/local/texlive/2025basic/texmf.cnf" 1741448314 628 81d1ada0f601fb1ffa62f1323192d946 ""
-  "report.aux" 1770734504.83447 2942 596c566e13c93892091d01d5c144a389 "pdflatex"
-  "report.out" 1770734504.83496 3358 7e2f7172b377dcd446421c93091212e6 "pdflatex"
-  "report.tex" 1770734504.11901 15007 9518333742be7f2c21136738760a7d17 ""
+  "report.aux" 1770806985.92463 4714 a89f234eaa0a49985ff4da9f9a84c1d9 "pdflatex"
+  "report.out" 1770806985.92521 5311 ea65635cdc124619ab3c3a74aa978065 "pdflatex"
+  "report.tex" 1770806985.20033 23961 2983ef454f17d133274076c2175dfd49 ""
   (generated)
   "report.aux"
   "report.log"

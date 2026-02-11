@@ -118,13 +118,107 @@ Finally, the entire experiment is orchestrated by the Tune \emph{Tuner}. The Tun
 % Quando li hai: accuracy, qualche grafico, una confusion matrix, breve commento: metti accuracy, precision, recall, f1 score e grafico che mostra andamento accuracy e andamento loss.
 
 \section{Medium CNN Model and Training}
-% Descrivi il modello (CNN), gli hyperparameters e come usi i DataLoader.
+% ------------------------------------------------------------
+% Model 2: Medium CNN (with Cross-Validation)
+% ------------------------------------------------------------
+
+\subsection{Medium CNN (Model 2) and training procedure}
+In the second experiment we moved from the baseline (Model 1) to a moderately deeper CNN architecture, while keeping the same overall input pipeline and classification goal (3 classes: rock, paper, scissors).% [file:2][file:1]
+Differently from Model 1, here the model assessment and model selection were carried out using \textbf{K-fold cross-validation}, in order to obtain a more reliable estimate of the generalization performance and to reduce dependence on a single train/validation split.% [file:2][file:1]
+The preprocessing  and data augmentation pipeline is the same as in the model 1, with the exception of the train/validation split, which is now performed within each fold of the cross-validation procedure.% [file:2][file:1]
+\subsubsection{Architecture (MediumCNN)}
+Model 2 increases capacity by stacking two convolutional blocks and introducing explicit regularization (Batch Normalization and Dropout).% [file:1]
+The network is composed of a \texttt{features} module (convolutions, normalization, ReLU and pooling) and a \texttt{classifier} module (fully-connected layers).% [file:1]
+
+\paragraph{Feature extractor.}
+\begin{itemize}
+  \item \textbf{Block 1:} \texttt{Conv2d(3 $\rightarrow$ 16, kernel=7, stride=1, padding=3)} $\rightarrow$ \texttt{BatchNorm2d(16)} $\rightarrow$ \texttt{ReLU} $\rightarrow$ \texttt{MaxPool2d(2)}.% [file:1]
+  \item \textbf{Block 2:} \texttt{Conv2d(16 $\rightarrow$ 32, kernel=3, padding=1)} $\rightarrow$ \texttt{BatchNorm2d(32)} $\rightarrow$ \texttt{ReLU} $\rightarrow$ \texttt{MaxPool2d(2)}.% [file:1]
+\end{itemize}
+
+\paragraph{Classifier.}
+After the convolutional blocks, the feature maps are flattened and passed to:% [file:1]
+\begin{itemize}
+  \item \texttt{LazyLinear(128)} $\rightarrow$ \texttt{ReLU} $\rightarrow$ \texttt{Dropout(0.5)} $\rightarrow$ \texttt{Linear(128, 3)}.% [file:1]
+\end{itemize}
+The final layer outputs logits for the three-class classification task.% [file:1]
+
+\subsubsection{Training setup}
+The model is trained with cross-entropy loss (\texttt{CrossEntropyLoss}) and optimized using stochastic gradient descent with momentum (\texttt{SGD}, momentum $=0.9$).% [file:1]
+We fix the main hyperparameters to the best configuration previously found while experimenting with Model 1 (learning rate $\approx 5.12 \times 10^{-4}$, batch size $=16$), and we do not run a new tuning procedure for Model 2.% [file:1]
+Each training run lasts $20$ epochs.% [file:1]
+
+To improve reproducibility, we set a global seed (\texttt{SEED}=42) for Python, NumPy, and PyTorch, and we enable deterministic behavior where applicable.% [file:1]
+Training is executed on Apple Silicon \texttt{MPS} when available, otherwise on CPU.% [file:1]
+
+\subsubsection{K-fold cross-validation protocol}
+To perform cross-validation, we combine the available training and validation folders into a single dataset and then split it using \texttt{KFold} with $K=10$, shuffling enabled and \texttt{random\_state}=42.% [file:1]
+For each fold, the model is trained \emph{from scratch} on $K-1$ folds and validated on the remaining fold, repeating the process until each fold has served as validation exactly once.% [file:1]
+Within each fold, we build a shuffled training dataloader and a non-shuffled validation dataloader (batch size $=16$, \texttt{num\_workers}=2).% [file:1]
+
+During training we log training and validation loss/accuracy at each epoch, and we track the best validation loss and best validation accuracy observed within each fold.% [file:1]
+After completing the $10$ folds, we retrain a final instance of the same architecture on the full (train+validation) dataset using the selected training configuration, and we save the resulting weights for the final test evaluation.% [file:1]
+
 
 \subsection{Results}
 % Quando li hai: accuracy, qualche grafico, una confusion matrix, breve commento: metti accuracy, precision, recall, f1 score e grafico che mostra andamento accuracy e andamento loss.
 
 \section{Residual CNN Model and Training}
 % Descrivi il modello (CNN), gli hyperparameters e come usi i DataLoader.
+
+% ------------------------------------------------------------
+% Model 3: Residual CNN (with Cross-Validation)
+% ------------------------------------------------------------
+
+\subsection{Residual CNN (Model 3) and training procedure}
+In the third experiment we further increased model capacity by adopting a residual CNN architecture, i.e., a network built from residual blocks with skip connections, while keeping the same three-class classification objective (rock, paper, scissors). % [file:44]
+As for Model 2, model assessment is performed using \textbf{K-fold cross-validation}, which reduces dependence on a single train/validation split and provides a more stable estimate of generalization performance. % [file:44]
+The preprocessing and data augmentation pipeline is the
+same as in the model 1, with the exception of the train/validation split,
+which is now performed within each fold of the cross-validation procedure.
+\subsubsection{Residual blocks (BasicBlock)}
+Model 3 is based on residual learning, where the output of a transformation $F(\cdot)$ is added to the original input through a shortcut connection. % [web:35]
+In its simplest form, a residual block can be expressed as
+\[
+y = F(x) + x,
+\]
+which helps the optimization of deeper networks by allowing gradients to flow through identity paths. % [web:35]
+
+In our implementation, each residual block (\texttt{BasicBlock}) contains two $3\times3$ convolutional layers, each followed by batch normalization, with a ReLU non-linearity after the first convolution and again after the residual addition. % [file:44]
+To introduce regularization, the block can optionally apply a spatial dropout (\texttt{Dropout2d}) after the first activation (with a drop probability set per stage). % [file:44]
+When the number of channels changes or spatial downsampling is required (i.e., \texttt{stride} $\neq 1$), the shortcut branch uses a projection consisting of a $1\times1$ convolution with matching stride followed by batch normalization, so that tensor dimensions align before the summation. % [file:44][web:31]
+
+\subsubsection{Architecture (ResCNN)}
+The network is organized into: (i) an initial convolutional stem, (ii) three residual stages, and (iii) a classification head. % [file:44]
+
+\paragraph{Stem.}
+The stem is composed of \texttt{Conv2d(3 $\rightarrow$ 16, kernel=7, stride=1, padding=3)} $\rightarrow$ \texttt{BatchNorm2d(16)} $\rightarrow$ \texttt{ReLU} $\rightarrow$ \texttt{MaxPool2d(2)}. % [file:44]
+
+\paragraph{Residual stages.}
+\begin{itemize}
+  \item \textbf{Stage 1 (16 channels, no downsampling):} \texttt{BasicBlock(16 $\rightarrow$ 16, stride=1, drop=0.0)} $\times 2$. % [file:44]
+  \item \textbf{Stage 2 (32 channels, downsampling):} \texttt{BasicBlock(16 $\rightarrow$ 32, stride=2, drop=0.1)} followed by \texttt{BasicBlock(32 $\rightarrow$ 32, stride=1, drop=0.1)}. % [file:44]
+  \item \textbf{Stage 3 (64 channels, downsampling):} \texttt{BasicBlock(32 $\rightarrow$ 64, stride=2, drop=0.2)} followed by \texttt{BasicBlock(64 $\rightarrow$ 64, stride=1, drop=0.2)}. % [file:44]
+\end{itemize}
+
+\paragraph{Classifier.}
+After the residual stages, features are flattened and passed to \texttt{LazyLinear(128)} $\rightarrow$ \texttt{ReLU} $\rightarrow$ \texttt{Dropout(0.5)} $\rightarrow$ \texttt{Linear(128, 3)}. % [file:44]
+The output layer produces logits for the three target classes. % [file:44]
+
+\subsubsection{Training setup}
+Training uses a multi-class cross-entropy loss (\texttt{CrossEntropyLoss}) and stochastic gradient descent with momentum (\texttt{SGD}, momentum $=0.9$). % [file:44]
+We keep the learning rate fixed to $5.115859\times 10^{-4}$ and use a batch size of $16$, training for $20$ epochs per fold. % [file:44]
+To improve reproducibility, we set a global seed (\texttt{SEED}=42) for Python, NumPy, and PyTorch, and enable deterministic behavior where applicable. % [file:44]
+Training runs on Apple Silicon \texttt{MPS} when available; otherwise it falls back to CPU. % [file:44]
+
+\subsubsection{K-fold cross-validation protocol}
+Cross-validation is implemented by merging the existing training and validation folders into a single dataset (\texttt{ConcatDataset}) and then applying \texttt{KFold} with $K=5$, shuffling enabled, and \texttt{random\_state}=42. % [file:44]
+For each fold, the model is trained \emph{from scratch} on $K-1$ folds and validated on the remaining fold, so that each sample serves as validation exactly once. % [file:44]
+Within each fold, we build a shuffled training dataloader and a non-shuffled validation dataloader (batch size $=16$, \texttt{num\_workers}=0). % [file:44]
+During training we log train/validation loss and accuracy at each epoch and track the best validation metrics within each fold for later aggregation (reported in the Results section). % [file:44]
+
+After completing cross-validation, we train a final instance of the same residual architecture on the full (train+validation) dataset using the selected configuration and save the weights to disk for final test evaluation (reported separately). % [file:44]
+
 
 \subsection{Results}
 % Quando li hai: accuracy, qualche grafico, una confusion matrix, breve commento: metti accuracy, precision, recall, f1 score e grafico che mostra andamento accuracy e andamento loss.
