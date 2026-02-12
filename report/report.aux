@@ -5,101 +5,96 @@
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
 \babel@aux{english}{}
-\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2}Dataset}{1}{section.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3}Preprocessing and Data Augmentation}{1}{section.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4}Train/Validation/Test Split}{1}{section.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5}Simple CNN Model and Training}{2}{section.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Model Training Methodology}{3}{subsection.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.1}Hyperparameter Search Space and Strategy}{3}{subsubsection.5.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.2}Architecture Hyperparameters (Grid Search)}{3}{subsubsection.5.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.3}Training Hyperparameters (Random Search)}{3}{subsubsection.5.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction and Dataset}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Preprocessing and Data Augmentation}{1}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Simple CNN Model and Training}{2}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Model Architecture: Simple CNN}{2}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Model Training Methodology}{2}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Hyperparameter Search Space and Strategy}{2}{subsubsection.3.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}Architecture Hyperparameters (Grid Search)}{2}{subsubsection.3.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.3}Training Hyperparameters (Random Search)}{3}{subsubsection.3.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.4}Training Hyperparameters (Log-Uniform)}{3}{subsubsection.3.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.5}Ray Tune Configuration and Training Loop}{3}{subsubsection.3.2.5}\protected@file@percent }
 \citation{ray_tuning}
 \citation{ray_tuning}
 \citation{ray_tuning}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.4}Training Hyperparameters (Log-Uniform)}{4}{subsubsection.5.1.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.5}Ray Tune Configuration and Training Loop}{4}{subsubsection.5.1.5}\protected@file@percent }
 \citation{ray_tuning}
 \citation{ray_tuning}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Results}{5}{subsection.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Model 1: Simple CNN (Ray Tune)}{5}{subsection.5.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Best hyperparameters (Ray Tune).}{5}{section*.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Performance.}{5}{section*.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Confusion matrix (test set).}{5}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3} Simple CNN (Ray Tune)'s Results}{5}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Best hyperparameters:}{5}{section*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Performance:}{5}{section*.2}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:model1-val-loss}{{1a}{6}{Model 1: validation loss across epochs (best Ray Tune trial)}{figure.caption.3}{}}
-\newlabel{sub@fig:model1-val-loss}{{a}{6}{Model 1: validation loss across epochs (best Ray Tune trial)}{figure.caption.3}{}}
-\newlabel{fig:model1-val-acc}{{1b}{6}{Model 1: validation accuracy across epochs (best Ray Tune trial)}{figure.caption.3}{}}
-\newlabel{sub@fig:model1-val-acc}{{b}{6}{Model 1: validation accuracy across epochs (best Ray Tune trial)}{figure.caption.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Learning curves for the best Model 1 configuration.}}{6}{figure.caption.3}\protected@file@percent }
-\newlabel{fig:model1-learning-curves}{{1}{6}{Learning curves for the best Model 1 configuration}{figure.caption.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Model 1: confusion matrix on the test set.}}{6}{figure.caption.5}\protected@file@percent }
-\newlabel{fig:model1-cm}{{2}{6}{Model 1: confusion matrix on the test set}{figure.caption.5}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Model 1 confusion matrix counts on the test set (rows: true class; columns: predicted class).}}{6}{table.caption.6}\protected@file@percent }
-\newlabel{tab:model1-cm-counts}{{1}{6}{Model 1 confusion matrix counts on the test set (rows: true class; columns: predicted class)}{table.caption.6}{}}
-\@writefile{toc}{\contentsline {paragraph}{Conclusion (Model 1).}{7}{section*.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6}Medium CNN Model and Training}{7}{section.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Medium CNN (Model 2) and training procedure}{7}{subsection.6.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.1}Architecture (MediumCNN)}{7}{subsubsection.6.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Feature extractor.}{7}{section*.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Classifier.}{7}{section*.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.2}Training setup}{8}{subsubsection.6.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.3}K-fold cross-validation protocol}{8}{subsubsection.6.1.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Results for Model 2: Medium CNN (K-fold Cross-Validation)}{8}{subsection.6.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Training configuration.}{8}{section*.10}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Cross-validation performance (K-fold).}{9}{section*.11}\protected@file@percent }
-\newlabel{fig:model2-cv-loss}{{3a}{9}{Model 2: loss across folds (mean $\pm $ std) over epochs}{figure.caption.12}{}}
-\newlabel{sub@fig:model2-cv-loss}{{a}{9}{Model 2: loss across folds (mean $\pm $ std) over epochs}{figure.caption.12}{}}
-\newlabel{fig:model2-cv-acc}{{3b}{9}{Model 2: accuracy across folds (mean $\pm $ std) over epochs}{figure.caption.12}{}}
-\newlabel{sub@fig:model2-cv-acc}{{b}{9}{Model 2: accuracy across folds (mean $\pm $ std) over epochs}{figure.caption.12}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Aggregated cross-validation learning curves for Model 2.}}{9}{figure.caption.12}\protected@file@percent }
-\newlabel{fig:model2-cv-curves}{{3}{9}{Aggregated cross-validation learning curves for Model 2}{figure.caption.12}{}}
-\@writefile{toc}{\contentsline {paragraph}{Final test performance.}{9}{section*.13}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Confusion matrix (test set).}{9}{section*.14}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Model 2 confusion matrix counts on the test set (rows: true class; columns: predicted class).}}{9}{table.caption.16}\protected@file@percent }
-\newlabel{tab:model2-cm-counts}{{2}{9}{Model 2 confusion matrix counts on the test set (rows: true class; columns: predicted class)}{table.caption.16}{}}
-\@writefile{toc}{\contentsline {paragraph}{Precision/Recall/F1 (test set).}{9}{section*.17}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Model 2: confusion matrix on the test set.}}{10}{figure.caption.15}\protected@file@percent }
-\newlabel{fig:model2-cm}{{4}{10}{Model 2: confusion matrix on the test set}{figure.caption.15}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Model 2 classification report on the test set.}}{10}{table.caption.18}\protected@file@percent }
-\newlabel{tab:model2-cls-report}{{3}{10}{Model 2 classification report on the test set}{table.caption.18}{}}
-\@writefile{toc}{\contentsline {paragraph}{Conclusion (Model 2).}{11}{section*.19}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {7}Residual CNN Model and Training}{11}{section.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Residual CNN (Model 3) and training procedure}{11}{subsection.7.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.1.1}Residual blocks (BasicBlock)}{11}{subsubsection.7.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.1.2}Architecture (ResCNN)}{12}{subsubsection.7.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Stem.}{12}{section*.20}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Residual stages.}{12}{section*.21}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Classifier.}{12}{section*.22}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.1.3}Training setup}{12}{subsubsection.7.1.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {7.1.4}K-fold cross-validation protocol}{12}{subsubsection.7.1.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Model 3: Residual CNN (K-fold Cross-Validation)}{13}{subsection.7.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Training configuration.}{13}{section*.23}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Cross-validation performance (K-fold).}{13}{section*.24}\protected@file@percent }
-\newlabel{fig:model3-cv-loss}{{5a}{13}{Model 3: loss across folds (mean $\pm $ std) over epochs}{figure.caption.25}{}}
-\newlabel{sub@fig:model3-cv-loss}{{a}{13}{Model 3: loss across folds (mean $\pm $ std) over epochs}{figure.caption.25}{}}
-\newlabel{fig:model3-cv-acc}{{5b}{13}{Model 3: accuracy across folds (mean $\pm $ std) over epochs}{figure.caption.25}{}}
-\newlabel{sub@fig:model3-cv-acc}{{b}{13}{Model 3: accuracy across folds (mean $\pm $ std) over epochs}{figure.caption.25}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Aggregated cross-validation learning curves for Model 3.}}{13}{figure.caption.25}\protected@file@percent }
-\newlabel{fig:model3-cv-curves}{{5}{13}{Aggregated cross-validation learning curves for Model 3}{figure.caption.25}{}}
-\@writefile{toc}{\contentsline {paragraph}{Final test performance.}{13}{section*.26}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Confusion matrix (test set).}{13}{section*.27}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Model 3: confusion matrix on the test set.}}{14}{figure.caption.28}\protected@file@percent }
-\newlabel{fig:model3-cm}{{6}{14}{Model 3: confusion matrix on the test set}{figure.caption.28}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Model 3 confusion matrix counts on the test set (rows: true class; columns: predicted class).}}{14}{table.caption.29}\protected@file@percent }
-\newlabel{tab:model3-cm-counts}{{4}{14}{Model 3 confusion matrix counts on the test set (rows: true class; columns: predicted class)}{table.caption.29}{}}
+\newlabel{fig:model1-val-loss}{{1a}{5}{Model 1: validation loss across epochs (best Ray Tune trial)}{figure.caption.3}{}}
+\newlabel{sub@fig:model1-val-loss}{{a}{5}{Model 1: validation loss across epochs (best Ray Tune trial)}{figure.caption.3}{}}
+\newlabel{fig:model1-val-acc}{{1b}{5}{Model 1: validation accuracy across epochs (best Ray Tune trial)}{figure.caption.3}{}}
+\newlabel{sub@fig:model1-val-acc}{{b}{5}{Model 1: validation accuracy across epochs (best Ray Tune trial)}{figure.caption.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Learning curves for the best Model 1 configuration.}}{5}{figure.caption.3}\protected@file@percent }
+\newlabel{fig:model1-learning-curves}{{1}{5}{Learning curves for the best Model 1 configuration}{figure.caption.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Confusion matrix:}{5}{section*.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Model 1 confusion matrix counts on the test set (rows: true class; columns: predicted class).}}{6}{table.caption.5}\protected@file@percent }
+\newlabel{tab:model1-cm-counts}{{1}{6}{Model 1 confusion matrix counts on the test set (rows: true class; columns: predicted class)}{table.caption.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{Conclusion (Model 1).}{6}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Medium CNN Model and Training}{6}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Training procedure}{6}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}Model Architecture}{6}{subsubsection.4.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Feature extractor:}{7}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Classifier:}{7}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}Training setup}{7}{subsubsection.4.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.3}K-fold cross-validation protocol}{7}{subsubsection.4.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Results for Medium CNN with K-fold Cross-Validation}{8}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Cross-validation performance (K-fold):}{8}{section*.9}\protected@file@percent }
+\newlabel{fig:model2-cv-loss}{{2a}{8}{Model 2: loss across folds (mean $\pm $ std) over epochs}{figure.caption.10}{}}
+\newlabel{sub@fig:model2-cv-loss}{{a}{8}{Model 2: loss across folds (mean $\pm $ std) over epochs}{figure.caption.10}{}}
+\newlabel{fig:model2-cv-acc}{{2b}{8}{Model 2: accuracy across folds (mean $\pm $ std) over epochs}{figure.caption.10}{}}
+\newlabel{sub@fig:model2-cv-acc}{{b}{8}{Model 2: accuracy across folds (mean $\pm $ std) over epochs}{figure.caption.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Aggregated cross-validation learning curves for Model 2.}}{8}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:model2-cv-curves}{{2}{8}{Aggregated cross-validation learning curves for Model 2}{figure.caption.10}{}}
+\@writefile{toc}{\contentsline {paragraph}{Final test performance:}{8}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Confusion matrix:}{8}{section*.12}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Model 2 confusion matrix counts on the test set (rows: true class; columns: predicted class).}}{8}{table.caption.14}\protected@file@percent }
+\newlabel{tab:model2-cm-counts}{{2}{8}{Model 2 confusion matrix counts on the test set (rows: true class; columns: predicted class)}{table.caption.14}{}}
+\@writefile{toc}{\contentsline {paragraph}{Precision/Recall/F1 (test set).}{8}{section*.15}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Model 2: confusion matrix on the test set.}}{9}{figure.caption.13}\protected@file@percent }
+\newlabel{fig:model2-cm}{{3}{9}{Model 2: confusion matrix on the test set}{figure.caption.13}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Model 2 classification report on the test set.}}{9}{table.caption.16}\protected@file@percent }
+\newlabel{tab:model2-cls-report}{{3}{9}{Model 2 classification report on the test set}{table.caption.16}{}}
+\@writefile{toc}{\contentsline {paragraph}{Conclusion (Model 2).}{10}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Residual CNN Model and Training}{10}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Residual CNN and training procedure}{10}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.1}Residual blocks (BasicBlock)}{10}{subsubsection.5.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.2}Architecture (ResCNN)}{11}{subsubsection.5.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Stem:}{11}{section*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Residual stages.}{11}{section*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Classifier.}{11}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.3}Training setup}{11}{subsubsection.5.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.1.4}K-fold cross-validation protocol}{11}{subsubsection.5.1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Residual CNN with 5-fold Cross-Validation: Results}{12}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Cross-validation performance:}{12}{section*.21}\protected@file@percent }
+\newlabel{fig:model3-cv-loss}{{4a}{12}{Model 3: loss across folds (mean $\pm $ std) over epochs}{figure.caption.22}{}}
+\newlabel{sub@fig:model3-cv-loss}{{a}{12}{Model 3: loss across folds (mean $\pm $ std) over epochs}{figure.caption.22}{}}
+\newlabel{fig:model3-cv-acc}{{4b}{12}{Model 3: accuracy across folds (mean $\pm $ std) over epochs}{figure.caption.22}{}}
+\newlabel{sub@fig:model3-cv-acc}{{b}{12}{Model 3: accuracy across folds (mean $\pm $ std) over epochs}{figure.caption.22}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Aggregated cross-validation learning curves for Model 3.}}{12}{figure.caption.22}\protected@file@percent }
+\newlabel{fig:model3-cv-curves}{{4}{12}{Aggregated cross-validation learning curves for Model 3}{figure.caption.22}{}}
+\@writefile{toc}{\contentsline {paragraph}{Final test performance:}{12}{section*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Confusion matrix:}{12}{section*.24}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Model 3 confusion matrix counts on the test set (rows: true class; columns: predicted class).}}{12}{table.caption.26}\protected@file@percent }
+\newlabel{tab:model3-cm-counts}{{4}{12}{Model 3 confusion matrix counts on the test set (rows: true class; columns: predicted class)}{table.caption.26}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Model 3: confusion matrix on the test set.}}{13}{figure.caption.25}\protected@file@percent }
+\newlabel{fig:model3-cm}{{5}{13}{Model 3: confusion matrix on the test set}{figure.caption.25}{}}
+\@writefile{toc}{\contentsline {paragraph}{Precision/Recall/F1:}{13}{section*.27}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Model 3 classification report on the test set.}}{13}{table.caption.28}\protected@file@percent }
+\newlabel{tab:model3-cls-report}{{5}{13}{Model 3 classification report on the test set}{table.caption.28}{}}
+\@writefile{toc}{\contentsline {paragraph}{Conclusion for Model 3:}{13}{section*.29}\protected@file@percent }
 \bibcite{stride}{1}
-\@writefile{toc}{\contentsline {paragraph}{Precision/Recall/F1 (test set).}{15}{section*.30}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Model 3 classification report on the test set.}}{15}{table.caption.31}\protected@file@percent }
-\newlabel{tab:model3-cls-report}{{5}{15}{Model 3 classification report on the test set}{table.caption.31}{}}
-\@writefile{toc}{\contentsline {paragraph}{Conclusion (Model 3).}{15}{section*.32}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{15}{section.8}\protected@file@percent }
-\bibcite{torch.nn}{2}
-\bibcite{buildmodel_tutorial}{3}
-\bibcite{cifar10_tutorial}{4}
-\bibcite{conv2d_parameters}{5}
-\bibcite{ray_tuning}{6}
-\bibcite{sgd_momentum}{7}
+\bibcite{padding}{2}
+\bibcite{torch.nn}{3}
+\bibcite{buildmodel_tutorial}{4}
+\bibcite{cifar10_tutorial}{5}
+\bibcite{conv2d_parameters}{6}
+\bibcite{ray_tuning}{7}
 \bibcite{sgd_momentum}{8}
-\@writefile{toc}{\contentsline {section}{\numberline {9}Bibliography}{16}{section.9}\protected@file@percent }
-\gdef \@abspage@last{16}
+\bibcite{sgd_momentum}{9}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{14}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Bibliography}{14}{section.7}\protected@file@percent }
+\gdef \@abspage@last{15}

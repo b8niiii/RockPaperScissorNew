@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1770812192.70556 "/Users/alessandro/Progetti/RockPaperScissorNew/report/report.tex" "report.pdf" "report" 1770812193.39644 0
+["pdflatex"] 1770919002.1911 "/Users/alessandro/Progetti/RockPaperScissorNew/report/report.tex" "report.pdf" "report" 1770919002.6227 0
   "/Users/alessandro/Library/texlive/2025basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1095.600pk" 1770719385.35473 28952 52fe7faed1780930c3a5b8854529b58f ""
   "/Users/alessandro/Library/texlive/2025basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk" 1770719385.96251 31928 4b8e29ab166d7ed8f09f8caa6ff09c81 ""
   "/Users/alessandro/Library/texlive/2025basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk" 1769080662.82357 40112 098937aaf2ee51316d361ea96c15e0b8 ""
@@ -11,7 +11,7 @@
   "/Users/alessandro/Library/texlive/2025basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1095.600pk" 1770719383.53254 35180 c91a457f25ff195d93754aa0adcd1388 ""
   "/Users/alessandro/Library/texlive/2025basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1095.600pk" 1769676870.22221 21952 ad14626f2126ecc501049756e912cc45 ""
   "/Users/alessandro/Library/texlive/2025basic/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk" 1770713794.21063 12644 aede08f34e09da552e349acb965c280f ""
-  "/Users/alessandro/Progetti/RockPaperScissorNew/report/report.tex" 1770812191.88416 37102 5f676d88ebf9904a4abdbc5e76633eea ""
+  "/Users/alessandro/Progetti/RockPaperScissorNew/report/report.tex" 1770919001.51439 34642 d212d807051d61568f01e7d645485b13 ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/tfm/jknappen/ec/ecbx1095.tfm" 1136768653 3584 21b378cca2e40816b0e6d74a4dc98f04 ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm" 1136768653 3584 402da0b29eafbad07963b1224b222f18 ""
   "/usr/local/texlive/2025basic/texmf-dist/fonts/tfm/jknappen/ec/ecbx1440.tfm" 1136768653 3584 13049b61b922a28b158a38aeff75ee9b ""
@@ -120,7 +120,6 @@
   "/usr/local/texlive/2025basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1769080242 79187 04b17f8738f833a5a5f7867124477b59 ""
   "/usr/local/texlive/2025basic/texmf-var/web2c/pdftex/pdflatex.fmt" 1769080226 2663826 587f5e3010f904a94922df97ed3ec94c ""
   "/usr/local/texlive/2025basic/texmf.cnf" 1741448314 628 81d1ada0f601fb1ffa62f1323192d946 ""
-  "outputs_imgs/model1_confusion_matrix.png" 1770809937.54452 21552 c761db63bf9a71500e376ab2db620e30 ""
   "outputs_imgs/model1_val_accuracy.png" 1770809507.07626 23879 4f89414540d1399d9b1ff69e77ac4607 ""
   "outputs_imgs/model1_val_loss.png" 1770809467.14461 21073 630520808fb8d654cd85a68041f03591 ""
   "outputs_imgs/model2_confusion_matrix.png" 1770811375.4643 26209 cd14524ea714e61a7971de6422c67786 ""
@@ -129,9 +128,9 @@
   "outputs_imgs/model3_loss_mean_std.png" 1770811948.63698 55979 68bb07fd2c6c61a49307a956b55912ed ""
   "outputs_imgs/outputCV2-AccAcrossFolds.png" 1770808443.81625 38064 571097e9f3601916e7880c58488e3276 ""
   "outputs_imgs/outputCV2-LossAcrossFolds.png" 1770808426.65749 51519 91468f8e142a80f67c76b3f583c65044 ""
-  "report.aux" 1770812193.33985 11578 790e8b697753545555ca227014163ef0 "pdflatex"
-  "report.out" 1770812193.3416 5957 0f04a7bcdf01205c06832be85c7d5ff0 "pdflatex"
-  "report.tex" 1770812191.88416 37102 5f676d88ebf9904a4abdbc5e76633eea ""
+  "report.aux" 1770919002.58122 10821 0049384831a9dbba15c7a22e28738c04 "pdflatex"
+  "report.out" 1770919002.58215 5622 9f04340c889dc8ee5984b0b8d16406a7 "pdflatex"
+  "report.tex" 1770919001.51439 34642 d212d807051d61568f01e7d645485b13 ""
   (generated)
   "report.aux"
   "report.log"

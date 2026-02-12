@@ -26,48 +26,41 @@
 
 \maketitle
 
-\section{Introduction}
-The following project aims at developing a Convolutional Neural Network capable of recognizing rock, paper and scissors hand gestures.
-
-
-\section{Dataset}
-The dataset is composed of 2189 pictures in a .png format and divided in three classes: 
-1. Rock, with 726 pictures.
-2. Paper, with 712 pictures.
-3. Scissors, with 750 pictures.
+\section{Introduction and Dataset}
+The following project aims at developing a Convolutional Neural Network capable of recognizing rock, paper and scissors hand gestures. \newline
+It consists of the development of three different models, with increasing complexity and in the comparison of their performance.  \newline
+The dataset is composed of 2189 pictures in a .png format and divided in three classes: \newline
+1. Rock, with 726 pictures.\newline
+2. Paper, with 712 pictures.\newline
+3. Scissors, with 750 pictures.\newline
 
 \section{Preprocessing and Data Augmentation}
 % Spiega resize a 256x256, normalizzazione, e le augmentations (flip, rotation, jitter).
 To prepare the dataset for training, a series of preprocessing steps and data augmentation techniques were applied. First, all images were resized to a uniform size of 256×256 pixels to ensure consistent input dimensions for the CNN. Next, pixel values were normalized to the range by dividing by 255, which supports faster convergence during training.
 To increase training-data diversity and improve model generalization, several augmentation techniques were used. These included random horizontal flips to reflect natural variability in hand gestures and random rotations within ±15° to account for different hand orientations. In addition, random color jittering was applied to vary brightness, contrast, and saturation, improving robustness to changing lighting conditions.
-\section{Train/Validation/Test Split}
+\newline
+\newline
 
 % Spiega lo script che divide per classe in 70/15/15 (o 80/10/10) e la struttura delle cartelle.
 Altough it is a best practice to use cross validation to validate models, in order to avoid overfitting on the validation set, for the first model a simple train/validation/test split was used. 
-This choice was made to speed up the training process, which is already quite long with the current hardware. The dataset was split into 70% for training, 15% for validation and 15% for testing. 
+This choice was made to speed up the training process, which is already quite long with the current hardware. The dataset was split into 70\% for training, 15\% for validation and 15\% for testing. 
 The split was performed separately for each class to ensure that the distribution of classes is consistent across all sets. 
 As for the other two models a cross validation approach has been used, to better evaluate the performance of the models and avoid overfitting on the validation set.
 
 \section{Simple CNN Model and Training}
 % Descrivi il modello (CNN), gli hyperparameters e come usi i DataLoader.
-Model Architecture: Simple CNN:
+\subsection{Model Architecture: Simple CNN} 
+
 The first model designed is a very simple Convolutional Neural Network (CNN) architecture. 
 It consists of a single convolutional layer followed by a ReLU activation function, a pooling layer, a flatten layer and a fully connected one.
-The convolutional layer takes as input 3 channels (RGB color images), the only fixed parameter, while the number of output channels and the kernel size are hyperparameters that can be tuned in the following way:
-- Number of output channels: 16, 32, 64 
-- Kernel size: 3, 4, 7
+The convolutional layer takes as input 3 channels (RGB color images), the only fixed parameter, while the number of output channels and the kernel size are hyperparameters that can be tuned in the following way: \newline \newline
+- Number of output channels: 16, 32, 64 \newline 
+- Kernel size: 3, 4, 7 \newline
+
 The padding is automatically calculated as the kernel size divided by 2, to preserve the spatial dimensions of the input. The purpose of this layer is to extract spatial features from the input images, such as edges and textures. 
 The ReLU activation function introduces non-linearity to the model, allowing it to learn more complex patterns, while the pooling layer reduces the spatial dimensions of the feature maps, which helps to reduce the number of parameters and computational cost.
-The kernel size of the pooling layer is tunable as well as we will see further ahead, and can be set to either 2 or 4, where 2 preserves more details, and 4 is faster but loses information
-Finally, the flatten layer converts the 2D feature maps into a 1D vector, which is then passed to the fully connected layer for classification.
-
-Hyperparameter Tuning:
-The project uses Ray Tune for hyperparameter tuning, which is a powerful library for distributed hyperparameter optimization; this allows us to efficiently search through the hyperparameter space and find the best combination of parameters for our model, splitting the workload across multiple compute resources if available. 
-The hyperparameters that are being tuned include the number of output channels in the convolutional layer, the kernel size of the convolutional layer and the kernel size of the pooling layer for the architectur of the model, as well as the learning rate and the batch size for the training process.
-The parameters are sampled in the following way:
-- Number of output channels and kernel size of the convolutional layer are being sample through a grid search, respectively from the sets {16, 32, 64} and {3, 4, 7}. This means that all possible combinations of these parameters will be evaluated, hence a total of 9 combinations (computationally expensive but exhaustive).
-- Kernal size of the pooling layer and batch size are being sampled through a random search, respectively from the sets {2, 4} and {16, 32, 64}. This means that a random combination of these parameters will be evaluated at each trial (less computationally expensive altough not exhaustive, to save computing power and time).
-- Learning rate is being sampled through a log-uniform distribution between 1e-4 and 1e-2, which allows us to explore a wide range of learning rates on a logarithmic scale, which is often more effective for finding good learning rates in deep learning models.
+The kernel size of the pooling layer is tunable, and can be set to either 2 or 4, where 2 preserves more details, and 4 is faster but loses information.
+Finally, the flatten layer converts the 2D feature maps into a 1D vector, which is then passed to the fully connected layer for classification. \newline
 
 \subsection{Model Training Methodology}
 
@@ -118,17 +111,14 @@ Inside each trial, the training loop follows a standard pattern. Each epoch is s
 
 Finally, the entire experiment is orchestrated by the Tune \emph{Tuner}. The Tuner combines the search space definition with the optimization objective (which metric to minimize or maximize) and the scheduler policy. It generates trial configurations, queues them, runs them when resources are available, and collects the results into a single structured output that you can inspect to select the best configuration and its corresponding checkpoint. \cite{ray_tuning}
 
-
-
-\subsection{Results}
 % Quando li hai: accuracy, qualche grafico, una confusion matrix, breve commento: metti accuracy, precision, recall, f1 score e grafico che mostra andamento accuracy e andamento loss.
 
 % -----------------------------
 % Results — Model 1 (Simple CNN)
 % -----------------------------
-\subsection{Model 1: Simple CNN (Ray Tune)}
+\subsection{ Simple CNN (Ray Tune)'s Results}
 
-\paragraph{Best hyperparameters (Ray Tune).}
+\paragraph{Best hyperparameters:} 
 Ray Tune selected the following configuration that turned out to the best by minimum validation loss across all trials::
 \begin{itemize}
   \item $out\_channels = 32$
@@ -138,10 +128,10 @@ Ray Tune selected the following configuration that turned out to the best by min
   \item $batch\_size = 16$
 \end{itemize} % [file:60]
 
-\paragraph{Performance.}
+\paragraph{Performance:}
 For the selected trial, the final validation loss was $0.2784$ and the final validation accuracy was $0.9202$. % [file:60]
-While on the test set, over $n=331$ images, the model achieved test loss $0.2737$ and test accuracy $0.9154$. % [file:60]
-
+While on the test set, over $n=331$ images, the model achieved test loss $0.2737$ and test accuracy $0.9154$. % [file:60] 
+\newline It is important to point out that due to the lack of cross-validation, these results are highly dependent on the specific train/validation/test split used, and may not be fully representative of the model's generalization performance. % [file:60]
 \begin{figure}[htbp]
   \centering
   \begin{subfigure}[t]{0.48\textwidth}
@@ -161,15 +151,8 @@ While on the test set, over $n=331$ images, the model achieved test loss $0.2737
   \label{fig:model1-learning-curves}
 \end{figure}
 
-\paragraph{Confusion matrix (test set).}
-Figure~\ref{fig:model1-cm} reports the confusion matrix on the test set (rows = true class, columns = predicted class), with the corresponding raw counts shown in Table~\ref{tab:model1-cm-counts}. % [file:60]
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.62\textwidth]{model1_confusion_matrix.png}
-  \caption{Model 1: confusion matrix on the test set.}
-  \label{fig:model1-cm}
-\end{figure}
+\paragraph{Confusion matrix:}
+Figure~\ref{tab:model1-cm-counts} reports the confusion matrix on the test set (rows = true class, columns = predicted class). % [file:60]
 
 \begin{table}[htbp]
   \centering
@@ -190,7 +173,7 @@ Figure~\ref{fig:model1-cm} reports the confusion matrix on the test set (rows = 
 Despite its minimal architecture, Model~1 provides a strong baseline for the task: the best Ray Tune configuration achieves $0.920$ validation accuracy and $0.915$ test accuracy (test loss $0.274$ on $n=331$ images). %
 The learning curves indicate rapid convergence within the 10 training epochs used during tuning, with validation loss decreasing and accuracy stabilizing near its final plateau, suggesting stable optimization. %
 The confusion matrix shows that most predictions fall on the diagonal (98, 95, 110 correct per class), while the remaining errors are concentrated between visually similar gestures (notably some Rock and Paper samples predicted as Scissors). %
-Overall, this simple CNN is computationally efficient and already generalizes well, making it a solid reference point for the upcoming comparison with deeper architectures and cross-validation.
+Overall, this computationally efficient model seems to already generalize well, making it a solid reference point for the upcoming comparison with deeper architectures and cross-validation.
 
 
 % ------------------------------------------------------------
@@ -198,21 +181,21 @@ Overall, this simple CNN is computationally efficient and already generalizes we
 % ------------------------------------------------------------
 \section{Medium CNN Model and Training}
 
-\subsection{Medium CNN (Model 2) and training procedure}
+\subsection{Training procedure}
 In the second experiment we moved from the baseline (Model 1) to a moderately deeper CNN architecture, while keeping the same overall input pipeline and classification goal (3 classes: rock, paper, scissors).% [file:2][file:1]
-Differently from Model 1, here the model assessment and model selection were carried out using \textbf{K-fold cross-validation}, in order to obtain a more reliable estimate of the generalization performance and to reduce dependence on a single train/validation split.% [file:2][file:1]
+\newline Differently from Model 1, here the model assessment and model selection were carried out using \textbf{K-fold cross-validation}, in order to obtain a more reliable estimate of the generalization performance and to reduce dependence on a single train/validation split.% [file:2][file:1]
 The preprocessing  and data augmentation pipeline is the same as in the model 1, with the exception of the train/validation split, which is now performed within each fold of the cross-validation procedure.% [file:2][file:1]
-\subsubsection{Architecture (MediumCNN)}
+\subsubsection{Model Architecture}
 Model 2 increases capacity by stacking two convolutional blocks and introducing explicit regularization (Batch Normalization and Dropout).% [file:1]
 The network is composed of a \texttt{features} module (convolutions, normalization, ReLU and pooling) and a \texttt{classifier} module (fully-connected layers).% [file:1]
 
-\paragraph{Feature extractor.}
+\paragraph{Feature extractor:}
 \begin{itemize}
   \item \textbf{Block 1:} \texttt{Conv2d(3 $\rightarrow$ 16, kernel=7, stride=1, padding=3)} $\rightarrow$ \texttt{BatchNorm2d(16)} $\rightarrow$ \texttt{ReLU} $\rightarrow$ \texttt{MaxPool2d(2)}.% [file:1]
   \item \textbf{Block 2:} \texttt{Conv2d(16 $\rightarrow$ 32, kernel=3, padding=1)} $\rightarrow$ \texttt{BatchNorm2d(32)} $\rightarrow$ \texttt{ReLU} $\rightarrow$ \texttt{MaxPool2d(2)}.% [file:1]
 \end{itemize}
 
-\paragraph{Classifier.}
+\paragraph{Classifier:}
 After the convolutional blocks, the feature maps are flattened and passed to:% [file:1]
 \begin{itemize}
   \item \texttt{LazyLinear(128)} $\rightarrow$ \texttt{ReLU} $\rightarrow$ \texttt{Dropout(0.5)} $\rightarrow$ \texttt{Linear(128, 3)}.% [file:1]
@@ -221,32 +204,26 @@ The final layer outputs logits for the three-class classification task.% [file:1
 
 \subsubsection{Training setup}
 The model is trained with cross-entropy loss (\texttt{CrossEntropyLoss}) and optimized using stochastic gradient descent with momentum (\texttt{SGD}, momentum $=0.9$).% [file:1]
-We fix the main hyperparameters to the best configuration previously found while experimenting with Model 1 (learning rate $\approx 5.12 \times 10^{-4}$, batch size $=16$), and we do not run a new tuning procedure for Model 2.% [file:1]
+We fix the main hyperparameters to the best configuration previously found while experimenting with Model 1 (learning rate $\approx 5.12 \times 10^{-4}$, batch size $=16$), and we do not run a new tuning procedure for Model 2. \newline % [file:1]
 Each training run lasts $20$ epochs.% [file:1]
 
 To improve reproducibility, we set a global seed (\texttt{SEED}=42) for Python, NumPy, and PyTorch, and we enable deterministic behavior where applicable.% [file:1]
-Training is executed on Apple Silicon \texttt{MPS} when available, otherwise on CPU.% [file:1]
+Training is executed on Apple Silicon \texttt{MPS} % [file:1]
 
 \subsubsection{K-fold cross-validation protocol}
 To perform cross-validation, we combine the available training and validation folders into a single dataset and then split it using \texttt{KFold} with $K=10$, shuffling enabled and \texttt{random\_state}=42.% [file:1]
-For each fold, the model is trained \emph{from scratch} on $K-1$ folds and validated on the remaining fold, repeating the process until each fold has served as validation exactly once.% [file:1]
-Within each fold, we build a shuffled training dataloader and a non-shuffled validation dataloader (batch size $=16$, \texttt{num\_workers}=2).% [file:1]
-
-During training we log training and validation loss/accuracy at each epoch, and we track the best validation loss and best validation accuracy observed within each fold.% [file:1]
-After completing the $10$ folds, we retrain a final instance of the same architecture on the full (train+validation) dataset using the selected training configuration, and we save the resulting weights for the final test evaluation.% [file:1]
+\newline For each fold, the model is trained \emph{from scratch} on $K-1$ folds and validated on the remaining fold, repeating the process until each fold has served as validation exactly once.% [file:1] 
+\newline Within each fold, we build a shuffled training dataloader and a non-shuffled validation dataloader (batch size $=16$, \texttt{num\_workers}=2).% [file:1]
+\newline During training we log training and validation loss/accuracy at each epoch, and we track the best validation loss and best validation accuracy observed within each fold.% [file:1]
+\newline After completing the $10$ folds, we retrain a final instance of the same architecture on the full (train+validation) dataset using the selected training configuration, and we save the resulting weights for the final test evaluation.% [file:1]
 % Quando li hai: accuracy, qualche grafico, una confusion matrix, breve commento: metti accuracy, precision, recall, f1 score e grafico che mostra andamento accuracy e andamento loss.
 
 % -----------------------------
 % Results — Model 2 (Medium CNN)
 % -----------------------------
-\subsection{Results for Model 2: Medium CNN (K-fold Cross-Validation)}
+\subsection{Results for Medium CNN with K-fold Cross-Validation}
 
-\paragraph{Training configuration.}
-Unlike Model~1, Model~2 was not re-tuned: we fixed the training hyperparameters to the previously selected learning rate and batch size, and evaluated the model via K-fold cross-validation. % [file:92]
-The model was optimized with SGD (momentum $=0.9$), using $lr = 5.115859\times 10^{-4}$, $batch\_size = 16$, and trained for $20$ epochs per fold. % [file:92]
-Cross-validation was performed with $K=10$ folds (shuffle enabled, random\_state $=42$), and the same preprocessing/augmentation pipeline used in the earlier experiment was retained. % [file:92]
-
-\paragraph{Cross-validation performance (K-fold).}
+\paragraph{Cross-validation performance (K-fold):}
 Across the $10$ folds, the mean \emph{best} validation accuracy was $0.9596 \pm 0.0147$ (mean $\pm$ std), while the mean \emph{best} validation loss was $0.1294 \pm 0.0352$. % [file:92]
 Figure~\ref{fig:model2-cv-curves} reports the learning curves aggregated across folds (mean $\pm$ std), showing stable convergence and limited variance across splits. % [file:92]
 
@@ -269,11 +246,11 @@ Figure~\ref{fig:model2-cv-curves} reports the learning curves aggregated across 
     \label{fig:model2-cv-curves}
 \end{figure}
 
-\paragraph{Final test performance.}
+\paragraph{Final test performance:}
 After cross-validation, a final instance of Model~2 was retrained on the full (train+validation) dataset and evaluated on the held-out test set. % [file:92]
 On the test set (classes: \texttt{paper}, \texttt{rock}, \texttt{scissors}, $n=331$), the model achieved test loss $0.1294$ and test accuracy $0.9668$. % [file:92]
 
-\paragraph{Confusion matrix (test set).}
+\paragraph{Confusion matrix:}
 Figure~\ref{fig:model2-cm} shows the confusion matrix on the test set (rows = true class, columns = predicted class), with the corresponding raw counts reported in Table~\ref{tab:model2-cm-counts}. % [file:92]
 
 \begin{figure}[htbp]
@@ -332,7 +309,7 @@ Most residual errors are limited and class-specific (e.g., a small number of \te
 % ------------------------------------------------------------
 \section{Residual CNN Model and Training}
 
-\subsection{Residual CNN (Model 3) and training procedure}
+\subsection{Residual CNN and training procedure}
 In the third experiment we further increased model capacity by adopting a residual CNN architecture, i.e., a network built from residual blocks with skip connections, while keeping the same three-class classification objective (rock, paper, scissors). % [file:44]
 As for Model 2, model assessment is performed using \textbf{K-fold cross-validation}, which reduces dependence on a single train/validation split and provides a more stable estimate of generalization performance. % [file:44]
 The preprocessing and data augmentation pipeline is the
@@ -353,7 +330,7 @@ When the number of channels changes or spatial downsampling is required (i.e., \
 \subsubsection{Architecture (ResCNN)}
 The network is organized into: (i) an initial convolutional stem, (ii) three residual stages, and (iii) a classification head. % [file:44]
 
-\paragraph{Stem.}
+\paragraph{Stem:}
 The stem is composed of \texttt{Conv2d(3 $\rightarrow$ 16, kernel=7, stride=1, padding=3)} $\rightarrow$ \texttt{BatchNorm2d(16)} $\rightarrow$ \texttt{ReLU} $\rightarrow$ \texttt{MaxPool2d(2)}. % [file:44]
 
 \paragraph{Residual stages.}
@@ -371,7 +348,7 @@ The output layer produces logits for the three target classes. % [file:44]
 Training uses a multi-class cross-entropy loss (\texttt{CrossEntropyLoss}) and stochastic gradient descent with momentum (\texttt{SGD}, momentum $=0.9$). % [file:44]
 We keep the learning rate fixed to $5.115859\times 10^{-4}$ and use a batch size of $16$, training for $20$ epochs per fold. % [file:44]
 To improve reproducibility, we set a global seed (\texttt{SEED}=42) for Python, NumPy, and PyTorch, and enable deterministic behavior where applicable. % [file:44]
-Training runs on Apple Silicon \texttt{MPS} when available; otherwise it falls back to CPU. % [file:44]
+Training runs on Apple Silicon \texttt{MPS}. % [file:44]
 
 \subsubsection{K-fold cross-validation protocol}
 Cross-validation is implemented by merging the existing training and validation folders into a single dataset (\texttt{ConcatDataset}) and then applying \texttt{KFold} with $K=5$, shuffling enabled, and \texttt{random\_state}=42. % [file:44]
@@ -379,18 +356,14 @@ For each fold, the model is trained \emph{from scratch} on $K-1$ folds and valid
 Within each fold, we build a shuffled training dataloader and a non-shuffled validation dataloader (batch size $=16$, \texttt{num\_workers}=0). % [file:44]
 During training we log train/validation loss and accuracy at each epoch and track the best validation metrics within each fold for later aggregation (reported in the Results section). % [file:44]
 
-After completing cross-validation, we train a final instance of the same residual architecture on the full (train+validation) dataset using the selected configuration and save the weights to disk for final test evaluation (reported separately). % [file:44]
+After completing cross-validation, we train a final instance of the same residual architecture on the full (train+validation) dataset using the same configuration and save the weights to disk for final test evaluation (reported separately). % [file:44]
 % Quando li hai: accuracy, qualche grafico, una confusion matrix, breve commento: metti accuracy, precision, recall, f1 score e grafico che mostra andamento accuracy e andamento loss.
 % -----------------------------
 % Results — Model 3 (Residual CNN)
 % -----------------------------
-\subsection{Model 3: Residual CNN (K-fold Cross-Validation)}
+\subsection{Residual CNN with 5-fold Cross-Validation: Results}
 
-\paragraph{Training configuration.}
-Model~3 was evaluated using K-fold cross-validation (K = 5, shuffle enabled, random\_state = 42), keeping the same preprocessing/augmentation pipeline adopted in the previous experiments. % [file:95]
-Training used CrossEntropyLoss and SGD with momentum ($0.9$), with $lr = 5.115859\times 10^{-4}$ and $batch\_size = 16$, for $20$ epochs per fold. % [file:95]
-
-\paragraph{Cross-validation performance (K-fold).}
+\paragraph{Cross-validation performance:}
 Across the 5 folds, the mean \emph{best} validation accuracy was $0.9849 \pm 0.0036$ (mean $\pm$ std), while the mean \emph{best} validation loss was $0.0613 \pm 0.0283$. % [file:95]
 Figure~\ref{fig:model3-cv-curves} reports the learning curves aggregated across folds (mean $\pm$ std), showing strong convergence and limited variance across splits. % [file:95]
 
@@ -413,11 +386,11 @@ Figure~\ref{fig:model3-cv-curves} reports the learning curves aggregated across 
   \label{fig:model3-cv-curves}
 \end{figure}
 
-\paragraph{Final test performance.}
+\paragraph{Final test performance:}
 After cross-validation, a final instance of Model~3 was retrained on the full (train+validation) dataset and evaluated on the held-out test set. % [file:95]
 On the test set (classes: \texttt{paper}, \texttt{rock}, \texttt{scissors}, $n=331$), the model achieved test loss $0.0619$ and test accuracy $0.9879$. % [file:95]
 
-\paragraph{Confusion matrix (test set).}
+\paragraph{Confusion matrix:}
 Figure~\ref{fig:model3-cm} shows the confusion matrix on the test set (rows = true class, columns = predicted class), with the corresponding raw counts reported in Table~\ref{tab:model3-cm-counts}. % [file:95]
 
 \begin{figure}[htbp]
@@ -442,7 +415,7 @@ Figure~\ref{fig:model3-cm} shows the confusion matrix on the test set (rows = tr
   \end{tabular}
 \end{table}
 
-\paragraph{Precision/Recall/F1 (test set).}
+\paragraph{Precision/Recall/F1:}
 Table~\ref{tab:model3-cls-report} reports precision, recall, and F1-score per class on the test set (support shown in the last column). % [file:95]
 Overall, the macro-averaged F1-score was $0.9879$ and the weighted-averaged F1-score was $0.9879$. % [file:95]
 
@@ -465,7 +438,7 @@ Overall, the macro-averaged F1-score was $0.9879$ and the weighted-averaged F1-s
   \end{tabular}
 \end{table}
 
-\paragraph{Conclusion (Model 3).}
+\paragraph{Conclusion for Model 3:}
 Model~3 achieves excellent and stable performance under 5-fold cross-validation, with mean best validation accuracy $0.9849$ and low fold-to-fold variability. % [file:95]
 After retraining on the full development set, the final model generalizes extremely well to the held-out test set, reaching $0.9879$ accuracy with uniformly high precision/recall across all three classes. % [file:95]
 The confusion matrix confirms that errors are rare and mostly isolated (only a few samples per class are misclassified). % [file:95]
@@ -481,6 +454,10 @@ Across the three experiments, performance improves consistently as model capacit
 \bibitem{stride} 
 Understand "stride". 
 \url{https://medium.com/@bragadeeshs/stride-in-cnns-stepping-towards-efficient-image-processing-e58a34b02ff0}
+
+\bibitem{padding} 
+Understand "padding". 
+\url{https://d2l.ai/chapter_convolutional-neural-networks/padding-and-strides.html}
 
 \bibitem{torch.nn}
 Basic tutorials for inspiration: what is torch.nn?.

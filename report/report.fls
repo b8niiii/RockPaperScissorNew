@@ -201,10 +201,6 @@ INPUT ./outputs_imgs/model1_val_accuracy.png
 INPUT ./outputs_imgs/model1_val_accuracy.png
 INPUT ./outputs_imgs/model1_val_accuracy.png
 INPUT ./outputs_imgs/model1_val_accuracy.png
-INPUT ./outputs_imgs/model1_confusion_matrix.png
-INPUT ./outputs_imgs/model1_confusion_matrix.png
-INPUT ./outputs_imgs/model1_confusion_matrix.png
-INPUT ./outputs_imgs/model1_confusion_matrix.png
 INPUT ./outputs_imgs/outputCV2-LossAcrossFolds.png
 INPUT ./outputs_imgs/outputCV2-LossAcrossFolds.png
 INPUT ./outputs_imgs/outputCV2-LossAcrossFolds.png
